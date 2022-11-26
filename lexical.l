@@ -1,99 +1,21 @@
 %{
 
 #include "synt.tab.h" 
-
+#include "fonction.h" 
 extern nb_ligne;
 extern YYSTYPE yylval;
-typedef struct {
-char nom[25];
-char code[25];
-char type[25];
-int  taille;
-char CONS[25];
-char valeur[25];
-}TypeTS;
 
-TypeTS ts[100];
-int cpt=0;
-
-int recherche(char entite[]){
-    int i=0;
-    while(i<cpt){
-        if(strcmp(entite,ts[i].nom)==0)return i;
-        i++;
-    }
-    return -1;
-}
-int tailletab(char entite[],int nombre){
-    int i=recherche(entite);
-    if(ts[i].taille<nombre)return -1;
-    else return 0;
-}
-int doubledeclaration(char entite[]){
-    int i=0;
-    i=recherche(entite);
-    if(i>=0 && strcmp(ts[i].type,"")==0) return 0;
-    else return -1;
-}
-
-
-void affectertype(char entite[],char type[]){
-    int i=recherche(entite);
-    strcpy(ts[i].type,type);
-}
-void affecterconst(char entite[],char cons[]){
-    int i=recherche(entite);
-    strcpy(ts[i].CONS,cons);
-}
-void affectertaille(char entite[],int taille){
-    int i=recherche(entite);
-    ts[i].taille=taille;
-}
-void affectervaleur(char entite[],char valeur[]){
-    int i=recherche(entite);
-    strcpy(ts[i].valeur,valeur);
-}
-
-
-void inserer(char nom[],char code[], char type[],char valeur[],int taille,char cons[]){
-    if(recherche(nom)==-1){
-        strcpy(ts[cpt].nom,nom);
-        strcpy(ts[cpt].code,code);
-        strcpy(ts[cpt].type,type);
-        strcpy(ts[cpt].valeur,valeur);
-        strcpy(ts[cpt].CONS,cons);
-        ts[cpt].taille=taille;
-        cpt++;
-    }
-    
-    
-}
-
-
-
-//une fonction pour afficher la table de symbole
-void afficher ()
-{
-printf("\t/*****************************Table des symboles **********************************************/\n");
-printf("\t _____________________________________________________________________________________________\n");
-printf("\t| NomEntite |  CodeEntite  |      TypeEntite  |    VALEUR  | Taille   | CONST                 |\n");
-printf("\t|___________|______________|__________________|____________|__________|_______________________|\n");
-int i=0;
-  while(i<cpt)
-  {
-    printf("\t|%10s |%12s  |%16s  |%10s  |%8d  |%21s  |\n",ts[i].nom,ts[i].code,ts[i].type,ts[i].valeur,ts[i].taille,ts[i].CONS);
-     i++;
-   }
-}
 %}
+signe [-+]
 lettres [a-zA-Z]
 chiffres [0-9]
-re {chiffres}+"."{chiffres}+
-idf "$"{lettres}({lettres}|{chiffres}|_)*
-idf_tab "@"{lettres}({lettres}|{chiffres}|_)*
-nombre {chiffres}+
+re {nombre}"."{chiffres}+
+idf_tab "@"{lettres}(({lettres}|{chiffres})*|_({lettres}|{chiffres}))+
+idf "$"{lettres}(({lettres}|{chiffres})*|_({lettres}|{chiffres}))+
+nombre {signe}?([1-9][0-9]*|0)
 string {lettres}({lettres}|{chiffres}|_)*
-commentaire "##"({string}|.|\n)*"##"
+comment "##"
+chaine_commentaire [^#]*
 booleen "true"|"false"
 
 %%
@@ -128,13 +50,15 @@ if return mcif;
 else return mcelse;
 OR return or;
 AND return and;
-{re} {yylval.flt=atof(yytext);
+void return mcvoid;
+return return mcreturn;
+{re} {yylval.str=strdup(yytext);
     return re;}
 {booleen} {yylval.str=strdup(yytext);
     return booleen;}
 {string} {yylval.str=strdup(yytext);
     return string;}
-{commentaire} return commentaire;
+{comment}{chaine_commentaire}{comment} {nb_ligne=nb_ligne+nb_ligne_comment(yytext); return commentaire;} 
 {idf} {if(yyleng <=25) {    inserer(yytext,"idf","","",1,"NOT CONST");
                             yylval.str=strdup(yytext);
                             return idf;}
@@ -146,15 +70,21 @@ AND return and;
         return idf_tab;
 }
 {nombre} {  yylval.ent=atoi(yytext);
-            return nombre;
+            if(atoi(yytext)>=-32768 && atoi(yytext)<=32767 ){
+                return nombre;
+            }
+            else{
+                printf("la valeur %s out of intervale [-32768|32767] a la ligne %d\n",yytext,nb_ligne);
+            }
+            
             }
 "\"" return j;
 "'" return ch;
 "" return espace;
-"%d" return inentier;
-"%b" return inbool;
-"%f" return inreel;
-"%s" return inchaine;
+"%d" {yylval.str=strdup(yytext);return inentier;}
+"%b" {yylval.str=strdup(yytext);return inbool;}
+"%f" {yylval.str=strdup(yytext);return inreel;}
+"%s" {yylval.str=strdup(yytext);return inchaine;}
 "=" return egale;
 "!=" return notegale;
 "<" return less;
@@ -162,15 +92,16 @@ AND return and;
 "<=" return lessegale;
 ">=" return greategale;
 ":=" return mc_affec;
-"\+" {yylval.str=strdup(yytext);
+"+" {yylval.str=strdup(yytext);
     return plus;}
-"\-"  {yylval.str=strdup(yytext);
+"-"  {yylval.str=strdup(yytext);
     return moins;}
-"\*"  {yylval.str=strdup(yytext);
+"*"  {yylval.str=strdup(yytext);
     return mult;}
 "/" {yylval.str=strdup(yytext);
     return devision;}
 ";" return pvg;
+"_" return tiri;
 "," return vrg;
 "(" return p_ou;
 ")" return p_fr;

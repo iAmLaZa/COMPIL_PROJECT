@@ -1,0 +1,45 @@
+import ISIL.io;
+import ISIL.lang;
+
+  void lok(){
+
+  };
+private class  $lok {
+    
+    ##  Cet exemple est correct !   ##
+    Entier $s,$i;
+    Reel $r;
+    Chaine $ch;
+    Bool $b;
+    Entier @tab[10];
+    CONST Entier $cee:=+5;
+    CONST Reel $ce:=-3.14;
+    CONST Chaine $chh:='lok';
+    main(){
+        $r:= ##comment## 12;
+        $s:=12+$s-15+12;
+        $ch:='Aimene';
+        $r:=0.12;
+        $r:=15+$r/3;
+        $s:=$s+@tab[5];
+        Out("donner lavaleur de s");
+        In("%d",$s);
+        $b:=true;
+        $b:=false;
+        for($i:=0;$i<10;$i++){
+        }
+        While($s!=100 OR $r<20.21 ){
+            Out("donner lavaleur de s");
+            In("%d",$s);
+         }
+         if($s>100 AND $b=false){
+             if($r!=5.12 OR $r<=8.25){
+                 Out("lokmane");
+             }else{
+                 Out("amir");
+             }
+         }else{
+             Out("madire walou = %b",$b);
+         }
+    }
+}

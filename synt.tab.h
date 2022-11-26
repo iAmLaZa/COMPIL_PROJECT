@@ -45,54 +45,57 @@
      pvg = 261,
      string = 262,
      commentaire = 263,
-     mc_private = 264,
-     mc_protected = 265,
-     mc_public = 266,
-     mc_class = 267,
-     idf = 268,
-     p_ou = 269,
-     p_fr = 270,
-     cr_ov = 271,
-     cr_fm = 272,
-     aco_ov = 273,
-     aco_fr = 274,
-     mc_main = 275,
-     mc_entier = 276,
-     mc_reel = 277,
-     mc_chaine = 278,
-     vrg = 279,
-     idf_tab = 280,
-     nombre = 281,
-     mc_const = 282,
-     mc_affec = 283,
-     plus = 284,
-     moins = 285,
-     mult = 286,
-     devision = 287,
-     mc_input = 288,
-     mc_out = 289,
-     j = 290,
-     inentier = 291,
-     inreel = 292,
-     inchaine = 293,
-     espace = 294,
-     mc_for = 295,
-     egale = 296,
-     notegale = 297,
-     less = 298,
-     great = 299,
-     lessegale = 300,
-     greategale = 301,
-     mcwhile = 302,
-     mcif = 303,
-     mcelse = 304,
-     ch = 305,
-     re = 306,
-     or = 307,
-     and = 308,
-     mcbool = 309,
-     booleen = 310,
-     inbool = 311
+     mcvoid = 264,
+     mc_private = 265,
+     mc_protected = 266,
+     mc_public = 267,
+     mc_class = 268,
+     idf = 269,
+     p_ou = 270,
+     p_fr = 271,
+     cr_ov = 272,
+     cr_fm = 273,
+     aco_ov = 274,
+     aco_fr = 275,
+     mc_main = 276,
+     mcreturn = 277,
+     mc_entier = 278,
+     mc_reel = 279,
+     mc_chaine = 280,
+     vrg = 281,
+     idf_tab = 282,
+     nombre = 283,
+     mc_const = 284,
+     mc_affec = 285,
+     plus = 286,
+     moins = 287,
+     mult = 288,
+     devision = 289,
+     mc_input = 290,
+     mc_out = 291,
+     j = 292,
+     inentier = 293,
+     inreel = 294,
+     inchaine = 295,
+     espace = 296,
+     mc_for = 297,
+     egale = 298,
+     notegale = 299,
+     less = 300,
+     great = 301,
+     lessegale = 302,
+     greategale = 303,
+     mcwhile = 304,
+     mcif = 305,
+     mcelse = 306,
+     ch = 307,
+     re = 308,
+     or = 309,
+     and = 310,
+     mcbool = 311,
+     booleen = 312,
+     inbool = 313,
+     tiri = 314
    };
 #endif
 
@@ -103,7 +106,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 13 "synt.y"
+#line 22 "synt.y"
 
 int ent;
 char* str;
@@ -113,7 +116,7 @@ float flt;
 
 
 /* Line 1676 of yacc.c  */
-#line 117 "synt.tab.h"
+#line 120 "synt.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

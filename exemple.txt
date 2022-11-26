@@ -1,0 +1,106 @@
+import ISIL.io;
+import ISIL.lang;
+
+
+private class  $lok {
+    
+    ##declarer entier##
+        Entier $s,$i;
+
+    ##declarer reel##
+        Reel $r;
+
+    ##declarer chaine##
+        Chaine $ch;
+
+    ##declarer boolean##
+        Bool $b;
+
+    ##declarer tableau##
+        Entier @tab[10];
+
+    ## double declaration tab##
+        Reel @tab[12];
+        Entier $s;
+        Chaine $ch;
+        Bool $b;
+        
+    ##declarer const##
+        CONST Entier $cee:=5;
+        CONST Reel $ce:=3.14;
+        CONST Chaine $chh:='lok';
+
+    main(){
+        
+        ##  Entier <- Reel    ##
+        $s:=12+$r;
+        $s:=5/2;
+        ##  Bool<-Bool+Entier(Erreur) ##
+        $b:=true+12;
+        
+        ##  Chaine <- Entier  ##
+        $ch:=12;
+        
+        $s:=12;
+        $ch:='Lokmane';
+        $r:=0.12;
+        $r:=15+@tab[$s]/3;
+        
+        ##  div/0   ##
+        $r:=$r/0;
+
+        ##  idf non declarer  ##
+            $jiwelanji:=46;
+
+        ##  simple out  ##
+            Out("donner lavaleur de s");
+
+        ##  input    ##
+            In("%d",$s);
+
+        ##  Out non compatible ##
+            Out("la valeur de s est %d",$s);
+
+
+        ##  const affected  ##
+            $cee:=6;
+
+        ##  depassement taille  ##
+            @tab[11]:=$s/4; 
+
+        ##  Div/0 avec valeur sauvgarder dans idf  zyada  ##
+            $r:=0;
+            $r:=$r/$r;
+
+        ##  affecter bool   ##
+            $b:=true;
+            $b:=false;
+
+        ##non declarer##
+            $aimen:=3;
+
+        ##boucle for##
+        for($i:=0;$i<10;$i++){
+            @tab[$i]:=$s/2;
+        }
+        ##boucle while##
+          While($s!=100 OR $r<20.21 ){
+             Out("donner lavaleur de s");
+
+             ## non compatible type in Bool <- Entier    ##
+            In("%b",$s);
+         }
+         ## if else avec or and ##
+         if($s>100 AND $b=false){
+             if($r!=5.12 OR $r<=8.25){
+                 Out("lokmane");
+             }else{
+                 Out("amir");
+             }
+         }else{
+             ## out inccorect Nbr de paramètres incorrect   ##
+             Out("madire walou",$b);
+         }
+          ##fin main##
+    }
+}
